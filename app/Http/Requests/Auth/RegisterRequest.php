@@ -3,6 +3,8 @@
 namespace App\Http\Requests\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class RegisterRequest extends FormRequest
 {
@@ -31,13 +33,14 @@ class RegisterRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.required' => __('Please enter your name.'),
-            'email.required' => __('Please enter your email.'),
-            'password.required' => __('Please enter your password.'),
-            'email.email' => __('Please enter a valid email address.'),
-            'email.unique' => __('This email address is already registered.'),
-            'password.confirmed' => __('The passwords do not match.'),
-            'password.min' => __('Password must be at least 8 characters.'),
+            'name.required' => [__('Please enter your name.')],
+            'email.required' => [__('Please enter your email.')],
+            'password.required' => [__('Please enter your password.')],
+            'email.email' => [__('Please enter a valid email address.')],
+            'email.unique' => [__('This email address is already registered.')],
+            'password.confirmed' =>[ __('The passwords do not match.')],
+            'password.min' => [__('Password must be at least 8 characters.')],
         ];
     }
+
 }
