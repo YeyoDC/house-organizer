@@ -8,5 +8,11 @@
     </nav>
     <div>
         <a href="#" class="text-sm text-gray-500 hover:text-indigo-500">⚙️ Settings</a>
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button type="submit" class="block w-full text-left py-2 px-4 hover:bg-gray-100 rounded">
+                🔒 Logout
+            </button>
+        </form>
     </div>
 </div>
