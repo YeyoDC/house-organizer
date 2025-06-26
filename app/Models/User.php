@@ -22,6 +22,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
+        'household_id'
     ];
 
     /**
@@ -44,9 +45,41 @@ class User extends Authenticatable implements MustVerifyEmail
         'password' => 'hashed',
     ];
 
+
     public function profile()
     {
         return $this->hasOne(Profile::class);
     }
+
+    public function household()
+    {
+        return $this->belongsTo(Household::class, 'household_id');
+    }
+
+    public function ownedHousehold()
+    {
+        return $this->hasOne(Household::class, 'owner_id');
+    }
+
+    public function sentInvitations()
+    {
+        return $this->hasMany(Invitation::class, 'invited_by');
+    }
+    public function getPendingInvitations()
+    {
+        return Invitation::where('email', $this->email)
+            ->where('status', 'pending')
+            ->whereDate('expires_at', '>=', now())->get();
+
+    }
+    public function isAdmin()
+    {
+        if($this->ownedHousehold){
+            return true;
+        }
+        return false;
+    }
+
+
 
 }

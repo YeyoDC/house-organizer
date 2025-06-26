@@ -26,8 +26,8 @@ class AppServiceProvider extends ServiceProvider
     {
         Response::macro('smart', function (Request $request, Closure $webResponse, array $options = []) {
             // checks if it's a mobile request
-            $isMobile = $request->attributes->get('is_mobile', false);
-            if ($isMobile) {
+//            $isMobile = $request->attributes->get('is_mobile', false);
+            if ($request->header('X-Client-Type') === 'mobile') {
                 $user = Auth::user();
 
                 // Determine if this is a login or register action

@@ -37,9 +37,7 @@
         </div>
 
         <nav class="p-4 space-y-2 flex-grow overflow-auto">
-            <a href="#" class="block py-2 px-4 hover:bg-gray-100 rounded">🏠 Dashboard</a>
-            <a href="#" class="block py-2 px-4 hover:bg-gray-100 rounded">🧹 Chores</a>
-            <a href="#" class="block py-2 px-4 hover:bg-gray-100 rounded">🛒 Groceries</a>
+            <a href="{{route('household.manage')}}" class="block py-2 px-4 hover:bg-gray-100 rounded">👥 Household</a>
         </nav>
 
         <div class="p-4 border-t">

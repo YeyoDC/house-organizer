@@ -19,7 +19,7 @@ use Illuminate\View\View;
 class RegisteredUserController extends Controller
 {
 
-    protected $registeredUserService;
+    protected RegisteredUserService $registeredUserService;
     public function __construct(RegisteredUserService $registeredUserService)
     {
         $this->registeredUserService = $registeredUserService;

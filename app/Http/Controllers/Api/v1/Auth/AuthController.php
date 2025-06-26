@@ -24,47 +24,19 @@ class AuthController extends Controller
     {
         $isMobile = $request->attributes->get('isMobile', false);
         $request->ensureIsNotRateLimited();
-
-
         $user = $this->auth->authenticate($request->email, $request->password);
-
         RateLimiter::clear($request->throttleKey());
-
-        // Detect if the client is mobile or web
-       // e.g. 'mobile' or 'web'
-
-        if ($isMobile) {
-            $token = $user->createToken('mobile-token')->plainTextToken;
-            return response()->json([
-                'token' => $token,
-                'user' => $user,
-            ]);
-        }
-        else{
-            // Session-based login (web)
-            Auth::login($user, $request->boolean('remember'));
-            $request->session()->regenerate();
-            return redirect()->intended('/dashboard');
-        }
-
-
-
+        $token = $user->createToken('mobile-token')->plainTextToken;
+        return response()->json([
+            'token' => $token,
+            'user' => $user,
+        ]);
     }
 
 
     public function logout(Request $request)
     {
-        $clientType = $request->header('X-Client-Type');
-        if ($clientType === 'mobile') {
             $request->user()->currentAccessToken()->delete();
             return response()->json(['message' => 'Logged out']);
-        }
-        else{
-            Auth::guard('web')->logout();
-            $request->session()->invalidate();
-            $request->session()->regenerateToken();
-            return redirect('/login');
-        }
-
     }
 }

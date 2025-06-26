@@ -9,6 +9,14 @@
     @vite('resources/css/app.css')
     @vite('resources/js/app.js')
 </head>
+@if(session('success'))
+    <x-flash-alerts :message="session('success')" type="success" />
+@endif
+
+@if(session('error'))
+    <x-flash-alerts :message="session('error')" type="error" />
+@endif
+
 
 <body class="bg-gray-100 min-h-screen">
 

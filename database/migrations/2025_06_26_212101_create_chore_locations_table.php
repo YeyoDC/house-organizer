@@ -11,15 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('households', function (Blueprint $table) {
+        Schema::create('chore_locations', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->foreignId('owner_id')->constrained('users', 'id')->cascadeOnDelete();
-            $table->text('description')->nullable();
-            $table->string('picture')->nullable();
             $table->timestamps();
-            $table->softDeletes();
-
         });
     }
 
@@ -28,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('households');
+        Schema::dropIfExists('chore_locations');
     }
 };

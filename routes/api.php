@@ -1,10 +1,12 @@
 <?php
 
 
+use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\v1\HouseholdController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\AuthController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -27,3 +29,9 @@ Route::middleware('auth:sanctum')->get('/user', fn(Request $request) => $request
 
 Route::post('/register', [RegisteredUserController::class, 'store'])
     ->name('register');
+
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('/household', [HouseholdController::class, 'manage'])->name('household.manage');
+    Route::post('/household', [HouseholdController::class, 'store'])->name('households.store');
+});
+
