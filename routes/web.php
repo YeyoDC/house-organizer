@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\HouseholdController;
+use App\Http\Controllers\InvitationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -37,6 +39,19 @@ if (app()->isLocal()) {
     Route::group(['middleware' => ['web', 'auth']], function () {
     });
 }
+// household controllers
+Route::middleware(['auth'])->group(function () {
+    Route::get('/household', [HouseholdController::class, 'manage'])->name('household.manage');
+    Route::post('/household', [HouseholdController::class, 'store'])->name('household.store');
+    Route::put('/household/{household}', [HouseholdController::class, 'update'])->name('household.update');
+
+});
+
+Route::middleware(['auth'])->group(function () {
+   Route::post('/invite', [InvitationController::class, 'store'])->name('invite.store');
+   Route::get('/invite', [InvitationController::class, 'index'])->name('invite.index');
+   Route::put('/invite/{invitation}', [InvitationController::class, 'update'])->name('invite.update');
+});
 
 
 require __DIR__.'/auth.php';

@@ -5,13 +5,21 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Providers\RouteServiceProvider;
+use App\Services\AuthService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\View\View;
 
 class AuthenticatedSessionController extends Controller
 {
+    protected $auth;
+
+    public function __construct(AuthService $auth)
+    {
+        $this->auth = $auth;
+    }
     /**
      * Display the login view.
      */
@@ -25,11 +33,16 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-        $request->authenticate();
+        $request->ensureIsNotRateLimited();
+        $user = $this->auth->authenticate($request->email, $request->password);
 
+        RateLimiter::clear($request->throttleKey());
+
+        Auth::login($user, $request->boolean('remember'));
         $request->session()->regenerate();
+        return redirect()->intended('/dashboard');
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+
     }
 
     /**
