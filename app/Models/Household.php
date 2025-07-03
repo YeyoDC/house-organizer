@@ -22,4 +22,9 @@ class Household extends Model
     {
        return $this->belongsTo(User::class, 'owner_id');
     }
+
+    public function chores()
+    {
+        return $this->hasMany(Chore::class);
+    }
 }

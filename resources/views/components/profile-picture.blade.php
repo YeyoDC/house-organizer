@@ -6,8 +6,8 @@
 
 @php
     $user = $user ?? auth()->user();
-    $profilePicture = $user->profile?->profile_picture;
-    $src = $profilePicture ? asset('storage/' . $profilePicture) : asset('storage/default-avatar.png');
+    $profilePicture = $user->profile_picture;
+    $src = $profilePicture ? asset($profilePicture) : asset('storage/default-avatar.png');
 @endphp
 
 <img

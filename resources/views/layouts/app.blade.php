@@ -8,6 +8,8 @@
     <title>{{ $title }}</title>
     @vite('resources/css/app.css')
     @vite('resources/js/app.js')
+
+    @livewireStyles
 </head>
 @if(session('success'))
     <x-flash-alerts :message="session('success')" type="success" />
@@ -53,6 +55,6 @@
 
 {{-- Mobile Bottom Navigation --}}
 <x-navigation.mobile />
-
+@livewireScripts
 </body>
 </html>

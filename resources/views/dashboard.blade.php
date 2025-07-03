@@ -1,6 +1,6 @@
 <x-app-layout title="Dashboard">
     <x-slot name="header">
-        <h1 class="text-gray-500 text-lg font-semibold">Welcome, {{ Auth::user()->profile->displayName ?? Auth::user()->name }}</h1>
+        <h1 class="text-gray-500 text-lg font-semibold">Welcome, {{ Auth::user()->usernamename ?? Auth::user()->name }}</h1>
     </x-slot>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">

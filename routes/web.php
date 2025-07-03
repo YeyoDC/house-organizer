@@ -28,6 +28,7 @@ Route::get('/dashboard', function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/profile', [UserController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [UserController::class, 'update'])->name('profile.update');
+    Route::put('/profile', [UserController::class, 'updateProfilePicture'])->name('profile.updatePicture');
     Route::delete('/profile', [UserController::class, 'destroy'])->name('profile.destroy');
 
 //    New route for completing profile
@@ -52,6 +53,16 @@ Route::middleware(['auth'])->group(function () {
    Route::get('/invite', [InvitationController::class, 'index'])->name('invite.index');
    Route::put('/invite/{invitation}', [InvitationController::class, 'update'])->name('invite.update');
 });
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/chores', [\App\Http\Controllers\ChoreController::class, 'index'])->name('chores.index');
+    Route::post('/chores', [\App\Http\Controllers\ChoreController::class, 'store'])->name('chores.store');
+    Route::get('/chores/create', [\App\Http\Controllers\ChoreController::class, 'create'])->name('chores.create');
+
+    Route::view('/chores/create-batch', 'chores.create')->name('chores.create-batch');
+    Route::view('/chores/manage', 'chores.manage')->name('chores.manage');
+});
+
 
 
 require __DIR__.'/auth.php';
