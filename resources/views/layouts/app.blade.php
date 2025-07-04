@@ -3,11 +3,27 @@
     <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="manifest" href="{{ secure_asset('manifest.webmanifest') }}">
+
+    <meta name="theme-color" content="#4F46E5">
+
+    <!-- Register Service Worker -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(() => console.log('Service Worker registered'))
+                    .catch(error => console.error('Service Worker registration failed:', error));
+            });
+        }
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ $title }}</title>
     @vite('resources/css/app.css')
     @vite('resources/js/app.js')
+
+    @livewireStyles
 </head>
 @if(session('success'))
     <x-flash-alerts :message="session('success')" type="success" />
@@ -53,6 +69,6 @@
 
 {{-- Mobile Bottom Navigation --}}
 <x-navigation.mobile />
-
+@livewireScripts
 </body>
 </html>

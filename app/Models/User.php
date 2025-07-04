@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -21,6 +22,7 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $fillable = [
         'name',
         'email',
+        'username',
         'password',
         'household_id'
     ];
@@ -78,6 +80,16 @@ class User extends Authenticatable implements MustVerifyEmail
             return true;
         }
         return false;
+    }
+
+    public function assignedChores()
+    {
+        return $this->hasMany(Chore::class, 'assigned_to');
+    }
+
+    public function choresCreated()
+    {
+        return $this->hasMany(Chore::class, 'created_by');
     }
 
 

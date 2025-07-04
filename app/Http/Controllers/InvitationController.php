@@ -62,7 +62,14 @@ class InvitationController extends Controller
     {
         $action = $request->input('action');
         $invitation = $this->invitationService->confirmInvitation($invitationId, $action);
-        return redirect('/household')->with('success', __('Action has been confirmed'));
+        if($action == 'accept'){
+            return redirect('/household')->with('success', __('You have accepted the invitation'));
+        }
+        else
+        {
+            return redirect('/household')->with('success', __('You have declined the invitation'));
+        }
+
     }
 
     /**

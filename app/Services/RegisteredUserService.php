@@ -17,6 +17,7 @@ class RegisteredUserService
             $user = User::create([
                 'name'     => $data['name'],
                 'email'    => $data['email'],
+                'username' => $data['username'],
                 'password' => Hash::make($data['password']),
             ]);
 
