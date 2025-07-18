@@ -17,6 +17,12 @@
             });
         }
     </script>
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"/>
+
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ $title }}</title>
@@ -24,6 +30,7 @@
     @vite('resources/js/app.js')
 
     @livewireStyles
+
 </head>
 @if(session('success'))
     <x-flash-alerts :message="session('success')" type="success" />
@@ -34,7 +41,7 @@
 @endif
 
 
-<body class="bg-gray-100 min-h-screen">
+<body class="bg-gray-100 min-h-screen" x-data="{ showModal: false, openList: true, openStock: true }">
 
 <div class="grid sm:grid-cols-[16rem_1fr] grid-rows-[auto_1fr] min-h-screen">
     {{-- Sidebar (desktop) --}}

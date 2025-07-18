@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\GroceryDashboardController;
+use App\Http\Controllers\GroceryListItemController;
 use App\Http\Controllers\HouseholdController;
 use App\Http\Controllers\InvitationController;
 use App\Http\Controllers\ProfileController;
@@ -63,6 +65,11 @@ Route::middleware(['auth'])->group(function () {
     Route::view('/chores/manage', 'chores.manage')->name('chores.manage');
 });
 
+Route::middleware(['auth'])->group(function () {
+    Route::get('/groceries',[GroceryDashboardController::class, 'index'])->name('groceries.index');
+    Route::get('/groceries/create/{groceryList}',[\App\Http\Controllers\GroceryListItemController::class, 'create'])->name('listItems.create');
+    Route::get('/groceries/edit/{groceryList}', [GroceryListItemController::class, 'edit'])->name('listItems.edit');
+});
 
 
 require __DIR__.'/auth.php';
