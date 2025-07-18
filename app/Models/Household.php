@@ -27,4 +27,15 @@ class Household extends Model
     {
         return $this->hasMany(Chore::class);
     }
+
+
+    public function groceryLists()
+    {
+        return $this->hasMany(GroceryList::class);
+    }
+    public function stockItems()
+    {
+        return $this->hasMany(GroceryStock::class);
+    }
+
 }

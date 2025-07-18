@@ -92,6 +92,14 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Chore::class, 'created_by');
     }
 
+    public function groceryLists()
+    {
+        return $this->hasMany(GroceryList::class);
+    }
 
+    public function stockItems()
+    {
+        return $this->hasMany(GroceryStock::class);
+    }
 
 }

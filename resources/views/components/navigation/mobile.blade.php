@@ -7,7 +7,7 @@
     <div class="flex justify-around items-center h-14 text-sm">
         <a href="{{route('dashboard')}}"  class="{{ $routeName === 'chores.index' ? 'text-indigo-600 font-semibold' : '' }}">🏠 <span class="block text-xs"> Home </span></a>
         <a href="{{route('chores.index')}}" class="{{ $routeName === 'chores.index' ? 'text-indigo-600 font-semibold' : '' }}">🧹<span class="block text-xs">Chores</span></a>
-        <a href="#" class="{{ $routeName === 'groceries.index' ? 'text-indigo-600 font-semibold' : '' }}">🛒<span class="block text-xs">Groceries</span></a>
+        <a href="{{route('groceries.index')}}" class="{{ $routeName === 'groceries.index' ? 'text-indigo-600 font-semibold' : '' }}">🛒<span class="block text-xs">Groceries</span></a>
         <a href="{{route('invite.index')}}" class="{{ $routeName === 'alerts.index' ? 'text-indigo-600 font-semibold' : '' }}">🔔<span class="block text-xs">Alerts</span></a>
     </div>
 </nav>
