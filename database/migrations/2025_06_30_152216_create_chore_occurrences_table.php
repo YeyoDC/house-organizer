@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('chore_recurrences');
+        Schema::dropIfExists('chore_occurrences');
     }
 };
