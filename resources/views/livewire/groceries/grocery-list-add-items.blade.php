@@ -111,42 +111,67 @@
                 @foreach ($currentListItems as $item)
                     <div
                         x-data="{ showNotes: false }"
-                        class="flex justify-between items-center py-2"
+                        class="py-2"
                     >
-                        <div class="flex items-center gap-4">
-                        <span class="font-medium text-gray-900">
-                            {{ $item['grocery_item']['name'] ?? 'Unnamed' }}
-                        </span>
-                            <span class="text-sm text-gray-600">Qty: {{ $item['quantity'] }}</span>
+                        {{-- Main row with all info --}}
+                        <div class="flex justify-between items-center gap-4">
+                            {{-- Item name and brand --}}
+                            <div class="flex items-center gap-2 flex-1 min-w-0">
+                            <span class="font-medium text-gray-900">
+                                {{ $item['grocery_item']['name'] ?? 'Unnamed' }}
+                            </span>
 
-                            {{-- Show notes toggle button if notes exist --}}
-                            @if (!empty($item['notes']))
+                                {{-- Brand Display --}}
+                                @if (!empty($item['brand']))
+                                    <span class="text-xs text-blue-600 font-medium">
+                                    ({{ $item['brand'] }})
+                                </span>
+                                @endif
+
+                                {{-- Notes indicator --}}
+                                @if (!empty($item['notes']))
+                                    <button
+                                        @click="showNotes = !showNotes"
+                                        class="text-indigo-600 hover:text-indigo-800 text-xs"
+                                        title="{{ $item['notes'] }}"
+                                    >
+                                        📝notes
+                                    </button>
+                                @endif
+                            </div>
+
+                            {{-- Quantity controls --}}
+                            <div class="flex items-center gap-1">
                                 <button
-                                    @click="showNotes = !showNotes"
-                                    class="ml-4 text-indigo-600 hover:text-indigo-800 text-xs font-medium focus:outline-none"
-                                    :aria-expanded="showNotes.toString()"
-                                    aria-controls="notes-{{ $item['id'] }}"
-                                    aria-label="Toggle notes visibility"
-                                >
-                                    <span x-text="showNotes ? 'Hide notes' : 'Show notes'"></span>
-                                </button>
-                            @endif
-                        </div>
+                                    wire:click="decrementItemQuantity({{ $item['id'] }})"
+                                    class="px-2 py-0.5 bg-gray-300 rounded hover:bg-gray-400 text-sm"
+                                    type="button"
+                                >-</button>
 
-                        {{-- Remove button --}}
-                        <button
-                            wire:click="removeItemFromList({{ $item['id'] }})"
-                            class="text-red-600 hover:text-red-800"
-                            title="Remove item"
-                            aria-label="Remove item"
-                        >
-                            <!-- Trash icon SVG -->
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
-                                 viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5-4h4m-4 0a1 1 0 00-1 1v1h6V4a1 1 0 00-1-1m-4 0h4" />
-                            </svg>
-                        </button>
+                                <span class="w-10 text-center text-sm font-medium">
+                                {{ $item['quantity'] }}
+                            </span>
+
+                                <button
+                                    wire:click="incrementItemQuantity({{ $item['id'] }})"
+                                    class="px-2 py-0.5 bg-gray-300 rounded hover:bg-gray-400 text-sm"
+                                    type="button"
+                                >+</button>
+                            </div>
+
+                            {{-- Remove button --}}
+                            <button
+                                wire:click="removeItemFromList({{ $item['id'] }})"
+                                class="text-red-600 hover:text-red-800 flex-shrink-0"
+                                title="Remove item"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                                     viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                          d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5-4h4m-4 0a1 1 0 00-1 1v1h6V4a1 1 0 00-1-1m-4 0h4" />
+                                </svg>
+                            </button>
+                        </div>
 
                         {{-- Notes content, expands below --}}
                         @if (!empty($item['notes']))
@@ -154,10 +179,9 @@
                                 x-show="showNotes"
                                 x-transition
                                 id="notes-{{ $item['id'] }}"
-                                class="mt-1 text-xs text-gray-500 italic max-w-md absolute bg-white p-2 rounded shadow"
-                                style="z-index: 10;"
+                                class="mt-2 text-xs text-gray-500 italic bg-gray-50 p-2 rounded"
                             >
-                                📝 {{ $item['notes'] }}
+                                📝  {{ $item['notes'] }}
                             </div>
                         @endif
                     </div>

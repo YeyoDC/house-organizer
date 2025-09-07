@@ -71,7 +71,7 @@
         href="{{ route('listItems.create', [$groceryListId]) }}"
         class="mt-4 px-3 py-1 bg-indigo-600 text-white rounded hover:bg-indigo-700 inline-block"
     >
-        Add Items
+        +/- items
     </a>
     @if(!$listItems->isEmpty())
     <a

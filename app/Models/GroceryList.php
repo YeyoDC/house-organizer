@@ -14,6 +14,7 @@ class GroceryList extends Model
         'user_id',
         'household_id',
         'due_date',
+        'grand_total',
         'status',
     ];
     public function household()

@@ -17,7 +17,7 @@ class GroceryLists extends Component
 
     public string $viewMode = 'household';
 
-    public $groceryLists = []; // ✅ Make it a component property
+    public $groceryLists = []; // Make it a component property
 
     protected GroceryListService $groceryListService;
 
@@ -28,25 +28,19 @@ class GroceryLists extends Component
 
     public function mount()
     {
-        $this->loadGroceryLists(); // ✅ Load lists on mount
+        $this->loadGroceryLists(); //  Load lists on mount
     }
 
     public function createList()
     {
         $data = $this->newList;
         $user = Auth::user();
-
-        GroceryList::create([
-            'name' => $data['name'],
-            'due_date' => $data['due_date'],
-            'status' => 'active',
-            'user_id' => $data['scope'] === 'personal' ? $user->id : null,
-            'household_id' => $data['scope'] === 'household' ? $user->household_id : null,
-        ]);
-
+        $data['user_id'] = $data['scope'] === 'personal' ? $user->id : null;
+        $data['household_id'] = $data['scope'] === 'household' ? $user->household_id : null;
+        $groceryList = $this->groceryListService->createGroceryList($data);
         $this->reset('newList');
 
-        $this->loadGroceryLists(); // ✅ Refresh list after creating
+        $this->loadGroceryLists(); // Refresh list after creating
 
         $this->dispatch('list-created');
     }

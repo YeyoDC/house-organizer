@@ -10,4 +10,7 @@ class GroceryDashboardController extends Controller
     {
         return view('groceries.index');
     }
+
+
+
 }

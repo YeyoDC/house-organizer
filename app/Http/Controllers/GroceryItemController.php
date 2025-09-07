@@ -47,6 +47,11 @@ class GroceryItemController extends Controller
     }
     public function destroy($groceryItemId, GroceryItemService $service)
     {
-
+        $deleted =  $service->deleteGroceryItem($groceryItemId);
+        if ($deleted) {
+            return redirect()->back()->with('success', 'Item deleted successfully.');
+        } else {
+            return redirect()->back()->with('error', 'Failed to delete item.');
+        }
     }
 }
