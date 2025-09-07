@@ -16,6 +16,9 @@ class GroceryListItem extends Model
             'quantity',
             'added_manually',
             'purchased',
+            'purchased_by',
+            'unit_price',
+            'total_price',
             'purchased_at',
             'expires_at',
             'brand',
@@ -28,6 +31,10 @@ class GroceryListItem extends Model
     public function groceryList()
     {
         return $this->belongsTo(GroceryList::class);
+    }
+    public function purchasedByUser()
+    {
+        return $this->belongsTo(User::class, 'purchased_by');
     }
 
 }

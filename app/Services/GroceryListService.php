@@ -22,4 +22,9 @@ class GroceryListService
             ->orderBy('due_date')
             ->get();
     }
+
+    public function createGroceryList(array $data): GroceryList
+    {
+        return GroceryList::create($data);
+    }
 }

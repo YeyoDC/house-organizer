@@ -24,7 +24,7 @@
                 <input
                     type="text"
                     readonly
-                    wire:model.defer="addItemData.{{ $item['id'] }}.quantity"
+                    value="{{ $addItemData[$item['id']]['quantity'] ?? 1 }}"
                     class="w-12 text-center border rounded px-2 py-0.5 text-sm"
                 />
 

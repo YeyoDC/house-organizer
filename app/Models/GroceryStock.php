@@ -13,8 +13,11 @@ class GroceryStock extends Model
         'quantity',
         'household_id',
         'expiry_date',
+        'unit_price',
+        'total_price',
         'location',
-        'brand'
+        'brand',
+        'purchased_by'
     ];
 
     public function groceryItem()

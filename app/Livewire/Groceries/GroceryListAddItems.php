@@ -6,6 +6,8 @@ use App\Models\GroceryItem;
 use App\Models\GroceryList;
 use App\Models\GroceryListItem;
 use App\Services\GroceryItemService;
+use App\Services\GroceryListItemService;
+use App\Services\GroceryListService;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
@@ -72,9 +74,12 @@ class GroceryListAddItems extends Component
         'Specialty Foods' => 'bg-rose-500',
     ];
 
+
+
     public function mount(int $groceryListId)
     {
         $this->groceryListId = $groceryListId;
+
 
         $this->loadListItems();
 
@@ -110,7 +115,7 @@ class GroceryListAddItems extends Component
 
         $this->categoryColors = $newColors;
 
-        // ✅ Load current grocery list items
+        //  Load current grocery list items
         $this->currentListItems = GroceryListItem::with('groceryItem')
             ->where('grocery_list_id', $this->groceryListId)
             ->get()
@@ -118,13 +123,16 @@ class GroceryListAddItems extends Component
     }
     public function removeItemFromList(int $itemId)
     {
-        GroceryListItem::where('id', $itemId)
-            ->where('grocery_list_id', $this->groceryListId)
-            ->delete();
+        $groceryListItemService = app(GroceryListItemService::class);
 
+        if($groceryListItemService->deleteGroceryListItem($itemId)) {
+            $this->loadListItems();
+            session()->flash('success', 'Item removed from grocery list.');
+        }
+        else{
+            session()->flash('error', 'Unable to remove item.');
+        }
         $this->loadListItems();
-
-        session()->flash('success', 'Item removed from grocery list.');
     }
 
 
@@ -132,7 +140,7 @@ class GroceryListAddItems extends Component
     {
         return GroceryListItem::where('grocery_list_id', $this->groceryListId)
             ->where('grocery_item_id', $itemId)
-            ->value('quantity');
+            ->sum('quantity');
     }
 
     public function incrementQuantity(int $itemId)
@@ -152,7 +160,26 @@ class GroceryListAddItems extends Component
             $this->addItemData[$itemId]['quantity']--;
         }
     }
+// editing qty
+    public function incrementItemQuantity(int $itemId)
+    {
+        $item = GroceryListItem::find($itemId);
+        if ($item && $item->grocery_list_id === $this->groceryListId) {
+            $item->quantity++;
+            $item->save();
+            $this->loadListItems();
+        }
+    }
 
+    public function decrementItemQuantity(int $itemId)
+    {
+        $item = GroceryListItem::find($itemId);
+        if ($item && $item->grocery_list_id === $this->groceryListId && $item->quantity > 1) {
+            $item->quantity--;
+            $item->save();
+            $this->loadListItems();
+        }
+    }
     public function addItemToList(int $itemId)
     {
         $data = $this->addItemData[$itemId] ?? [];
@@ -160,15 +187,16 @@ class GroceryListAddItems extends Component
         $brand = $data['brand'] ?? null;
         $notes = $data['notes'] ?? null;
 
+        // Find existing item with no brand and no notes
         $existing = GroceryListItem::where('grocery_list_id', $this->groceryListId)
             ->where('grocery_item_id', $itemId)
-            ->first();
+            ->get()
+            ->first(function($item) {
+                return is_null($item->brand) && is_null($item->notes);
+            });
 
-        if ($existing) {
+        if (empty($brand) && empty($notes) && $existing) {
             $existing->quantity += $quantity;
-            if ($brand) {
-                $existing->brand = $brand;
-            }
             $existing->save();
         } else {
             GroceryListItem::create([
@@ -183,9 +211,7 @@ class GroceryListAddItems extends Component
         }
 
         unset($this->addItemData[$itemId]);
-
         $this->loadListItems();
-
         session()->flash('success', 'Item added to grocery list!');
     }
     public function addNewItemToCategory($categoryId)
