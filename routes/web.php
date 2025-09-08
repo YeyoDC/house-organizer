@@ -23,6 +23,10 @@ Route::get('/debug', function () {
     return 'Check logs!';
 });
 
+Route::get('/debug-log', function () {
+    Log::error('This is a test log entry.');
+    abort(500, 'Testing 500 error logging.');
+});
 
 Route::get('/', function () {
     return view('auth/login');
