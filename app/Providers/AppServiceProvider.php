@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\ServiceProvider;
 use function Psy\debug;
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,6 +25,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        if (config('app.env') === 'production') {
+            URL::forceScheme('https');
+        }
+
         Response::macro('smart', function (Request $request, Closure $webResponse, array $options = []) {
             // checks if it's a mobile request
 //            $isMobile = $request->attributes->get('is_mobile', false);
