@@ -44,6 +44,9 @@ return [
 
     'debug' => (bool) env('APP_DEBUG', false),
 
+    'log' => env('LOG_CHANNEL', 'stack'),
+
+
     /*
     |--------------------------------------------------------------------------
     | Application URL
