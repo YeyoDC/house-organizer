@@ -13,7 +13,7 @@ export default defineConfig({
         port: 5173,          // default port (change if needed)
         cors: true,
         hmr: {
-            host: '192.168.2.32',  // your dev machine IP address
+            host: '192.168.2.145',  // your dev machine IP address
             protocol: 'ws',
         },
 
