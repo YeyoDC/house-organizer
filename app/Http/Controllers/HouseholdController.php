@@ -38,10 +38,12 @@ class HouseholdController extends Controller
             description: $request->input('description'),
         );
 
-        return response()->smart($request, fn() => redirect('/household'),[
-            'message' => 'Household added successfully',
-            'data' => $household,
-        ]);
+//        return response()->smart($request, fn() => redirect('/household'),[
+//            'message' => 'Household added successfully',
+//            'data' => $household,
+//        ]);
+        return redirect('/household')
+            ->with('message', 'Household added successfully');
     }
     public function update(Request $request, Household $household)
     {
