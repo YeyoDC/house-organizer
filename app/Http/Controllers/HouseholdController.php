@@ -22,11 +22,15 @@ class HouseholdController extends Controller
     public function manage()
     {
         $user = Auth::user();
+
+        $user->loadMissing('household.members'); // to avoid stale relationship
+
         $household = $user->household;
-        $members = $household ? $household->members : collect();
+        $members = $household?->members ?? collect();
 
         return view('household.manage', compact('household', 'members', 'user'));
     }
+
 
     public function store(HouseholdRequest $request)
     {
