@@ -27,9 +27,7 @@ class HouseholdController extends Controller
 
         $household = $user->household;
         $members = $household?->members ?? collect();
-        dd($members, $household, $user);
-
-
+        
         return view('household.manage', compact('household', 'members', 'user'));
     }
 
