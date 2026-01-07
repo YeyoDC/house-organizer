@@ -22,7 +22,7 @@
             <div class="flex items-center justify-between space-x-4 p-2 rounded hover:bg-gray-100">
                 <div class="flex items-center space-x-3">
                     <!-- Profile picture -->
-                    <x-profile-picture :user="$member" size="8" class="rounded-full border border-gray-300" />
+{{--                    <x-profile-picture :user="$member" size="8" class="rounded-full border border-gray-300" />--}}
 
                     <!-- Name and badges -->
                     <div class="text-sm">
