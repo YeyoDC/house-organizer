@@ -11,7 +11,7 @@
 @foreach($invitations as $invitation)
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-2 sm:space-y-0 sm:space-x-4 p-2 rounded hover:bg-gray-100">
         <div class="flex items-start sm:items-center space-x-3">
-            <x-profile-picture :user="$invitation->inviter" size="8" class="rounded-full border border-gray-300" />
+{{--            <x-profile-picture :user="$invitation->inviter" size="8" class="rounded-full border border-gray-300" />--}}
             <div class="text-sm">
                 <p class="font-medium flex flex-wrap gap-x-1 items-center">
                     <span>{{ $invitation->inviter->name }}</span>
