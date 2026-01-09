@@ -82,3 +82,9 @@ Route::middleware(['auth'])->group(function () {
 
 
 require __DIR__.'/auth.php';
+
+// amazon bucket test
+Route::get('/s3-test', function () {
+    $path = Storage::disk('s3')->put('test.txt', 'hello');
+    return Storage::disk('s3')->url('test.txt');
+});
