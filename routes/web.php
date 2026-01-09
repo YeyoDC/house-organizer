@@ -7,6 +7,7 @@ use App\Http\Controllers\InvitationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -85,6 +86,7 @@ require __DIR__.'/auth.php';
 
 // amazon bucket test
 Route::get('/s3-test', function () {
-    $path = Storage::disk('s3')->put('test.txt', 'hello');
-    return Storage::disk('s3')->url('test.txt');
+    Storage::disk('s3')->put('test.txt', 'hello s3');
+    return 'Uploaded!';
 });
+
