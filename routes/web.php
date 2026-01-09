@@ -85,8 +85,22 @@ Route::middleware(['auth'])->group(function () {
 require __DIR__.'/auth.php';
 
 // amazon bucket test
+
+
 Route::get('/s3-test', function () {
-    Storage::disk('s3')->put('test.txt', 'hello s3');
-    return 'Uploaded!';
+    try {
+        Storage::disk('s3')->put('test.txt', 'hello s3');
+        return 'Upload OK';
+    } catch (\Aws\Exception\AwsException $e) {
+        return response()->json([
+            'aws_error' => $e->getAwsErrorMessage(),
+            'aws_code' => $e->getAwsErrorCode(),
+        ], 500);
+    } catch (\Throwable $e) {
+        return response()->json([
+            'error' => $e->getMessage(),
+        ], 500);
+    }
 });
+
 
