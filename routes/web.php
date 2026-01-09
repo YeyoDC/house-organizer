@@ -86,16 +86,26 @@ require __DIR__.'/auth.php';
 
 // amazon bucket test
 
-use Illuminate\Support\Facades\Config;
 
-Route::get('/s3-test', function () {
-    return response()->json([
-        'disk' => Config::get('filesystems.default'),
-        'bucket' => Config::get('filesystems.disks.s3.bucket'),
-        'region' => Config::get('filesystems.disks.s3.region'),
-        'key_exists' => !empty(Config::get('filesystems.disks.s3.key')),
-        'secret_exists' => !empty(Config::get('filesystems.disks.s3.secret')),
-    ]);
-});
+//Route::get('/s3-test', function () {
+//    try {
+//        Storage::disk('s3')->put('test.txt', 'hello s3');
+//        return 'Upload OK';
+//    } catch (\Aws\Exception\AwsException $e) {
+//        return response()->json([
+//            'aws_error' => $e->getAwsErrorMessage(),
+//            'aws_code' => $e->getAwsErrorCode(),
+//        ], 500);
+//    } catch (\Throwable $e) {
+//        return response()->json([
+//            'error' => $e->getMessage(),
+//        ], 500);
+//    }
+//});
+//
+//Route::get('/s3-test1', function () {
+//    Storage::disk('s3')->put('test.txt', 'hello s3');
+//    return 'Uploaded!';
+//});
 
 
