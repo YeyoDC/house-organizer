@@ -103,4 +103,9 @@ Route::get('/s3-test', function () {
     }
 });
 
+Route::get('/s3-test1', function () {
+    Storage::disk('s3')->put('test.txt', 'hello s3');
+    return 'Uploaded!';
+});
+
 
