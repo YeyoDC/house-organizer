@@ -85,8 +85,17 @@ Route::middleware(['auth'])->group(function () {
 require __DIR__.'/auth.php';
 
 // amazon bucket test
+
+use Illuminate\Support\Facades\Config;
+
 Route::get('/s3-test', function () {
-    Storage::disk('s3')->put('test.txt', 'hello s3');
-    return 'Uploaded!';
+    return response()->json([
+        'disk' => Config::get('filesystems.default'),
+        'bucket' => Config::get('filesystems.disks.s3.bucket'),
+        'region' => Config::get('filesystems.disks.s3.region'),
+        'key_exists' => !empty(Config::get('filesystems.disks.s3.key')),
+        'secret_exists' => !empty(Config::get('filesystems.disks.s3.secret')),
+    ]);
 });
+
 
