@@ -1,15 +1,18 @@
 @props(['user' => auth()->user()])
-
 @php
-    $src = asset('storage/' . $user->profile_picture);
-@endphp
+    use Illuminate\Support\Facades\Storage;
 
+    $src = $user->profile_picture
+        ? Storage::url($user->profile_picture)
+        : asset('images/default-avatar.png');
+@endphp
 <div x-data="{ menuOpen: false, viewImage: false, showUploadModal: false }" class="relative">
 
     <!-- Profile Picture Button -->
     <button @click="menuOpen = !menuOpen">
-        <img src="{{ $src }}" alt="Profile Picture"
-             class="w-8 h-8 rounded-full object-cover border border-white shadow" />
+{{--        <img src="{{ $src }}" alt="Profile Picture"--}}
+{{--             class="w-8 h-8 rounded-full object-cover border border-white shadow" />--}}
+        <x-profile-picture :user="$user" size="8" class="shadow-md" />
     </button>
 
     <!-- Dropdown Menu -->
