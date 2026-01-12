@@ -17,7 +17,7 @@
 
 <img
     src="{{ $src }}"
-    alt="Profile Picture"
+    alt="{{$user->name}}"
     class="rounded-full object-cover border border-white w-{{ $size }} h-{{ $size }} {{ $class }}"
 />
 

@@ -68,7 +68,7 @@ class UserController extends Controller
 
         if ($request->hasFile('profile_picture')) {
             // Store the image in the public disk under profile_pictures folder
-            $path = $request->file('profile_picture')->store('profile_pictures', 'public');
+            $path = $request->file('profile_picture')->store('profile_pictures', 's3');
 
             // Update the user profile_picture column with the relative path
             $user->profile_picture = $path;
