@@ -22,7 +22,9 @@ class ProfileController extends Controller
         $user = auth()->user();
         $profileData = $request->only(['displayName', 'phone']);
         if($request->hasFile('profile_picture')){
-            $path = $request->file('profile_picture')->store('profile_pictures', 'public');
+            $path = $request->file('profile_picture')
+                ->store('profile_pictures', 's3');
+
             $profileData['profile_picture'] = $path;
         }
 
