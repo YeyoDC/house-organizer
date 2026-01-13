@@ -114,9 +114,7 @@
                                 @if($assigned)
                                     <button @click="open = !open; $wire.set('showUserListFor', {{ $occurrence->id }})"
                                             class="flex items-center space-x-1">
-                                        <img src="{{ asset('storage/'.$assigned->profile_picture) }}"
-                                             class="w-8 h-8 rounded-full object-cover border border-gray-300"
-                                             alt="avatar"/>
+                                        <x-profile-picture :user="$user" size="8" class="shadow-md" />
                                         <span
                                             class="text-xs text-green-700 bg-green-100 px-2 py-1 rounded-full font-medium flex items-center space-x-1">
                 <span>{{ $assigned->name }}</span>
