@@ -143,9 +143,7 @@
                                             <div class="flex items-center gap-2 py-1 hover:bg-gray-100 px-2 rounded cursor-pointer"
                                                  wire:click="assignTo({{ $occurrence->id }}, {{ $user->id }})"
                                                  @click="open = false; $wire.set('showUserListFor', null)">
-                                                <img src="{{ asset('storage/'.$user->profile_picture) }}"
-                                                     alt="{{ $user->name }}"
-                                                     class="w-6 h-6 rounded-full">
+                                                <x-profile-picture :user="$user" size="6" class="shadow-md" />
                                                 <span>{{ $user->name }}</span>
                                             </div>
                                         @endforeach
