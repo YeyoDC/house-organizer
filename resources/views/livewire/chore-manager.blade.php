@@ -47,7 +47,7 @@
                     wire:click="$set('filterAssigned', {{ $member->id }})"
                     class="flex flex-col items-center space-y-1 px-2 py-1 rounded cursor-pointer
                     {{ $filterAssigned == $member->id ? 'bg-blue-600 text-white' : 'bg-gray-100' }}">
-                    <x-profile-picture :user="$member" size="10" class="shadow-md" />
+                    <x-profile-picture :user="$member" size="8" class="shadow-md" />
                     <span class="text-[10px] truncate max-w-[50px] text-center">{{ $member->name }}</span>
                 </button>
             @endforeach
