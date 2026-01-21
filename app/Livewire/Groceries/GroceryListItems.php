@@ -84,6 +84,7 @@ class GroceryListItems extends Component
     {
         $this->listItems = GroceryListItem::with('groceryItem.category')
             ->where('grocery_list_id', $this->groceryListId)
+            ->where('purchased', 0)
             ->get();
     }
 
